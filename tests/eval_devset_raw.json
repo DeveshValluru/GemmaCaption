@@ -1,0 +1,42 @@
+{
+ "nature": [
+  "https://assets.mixkit.co/videos/2213/2213-1080.mp4",
+  "https://assets.mixkit.co/videos/2213/2213-360.mp4",
+  "https://assets.mixkit.co/videos/41576/41576-1080.mp4"
+ ],
+ "urban": [
+  "https://assets.mixkit.co/videos/49845/49845-1080.mp4",
+  "https://assets.mixkit.co/videos/49845/49845-360.mp4",
+  "https://assets.mixkit.co/videos/1606/1606-1080.mp4"
+ ],
+ "animals": [
+  "https://assets.mixkit.co/videos/19179/19179-720.mp4",
+  "https://assets.mixkit.co/videos/19179/19179-360.mp4",
+  "https://assets.mixkit.co/videos/11007/11007-720.mp4"
+ ],
+ "people": [
+  "https://assets.mixkit.co/videos/4401/4401-1080.mp4",
+  "https://assets.mixkit.co/videos/4401/4401-360.mp4",
+  "https://assets.mixkit.co/videos/8739/8739-1080.mp4"
+ ],
+ "sports": [
+  "https://assets.mixkit.co/videos/43483/43483-1080.mp4",
+  "https://assets.mixkit.co/videos/43483/43483-360.mp4",
+  "https://assets.mixkit.co/videos/40766/40766-1080.mp4"
+ ],
+ "food": [
+  "https://assets.mixkit.co/videos/49231/49231-720.mp4",
+  "https://assets.mixkit.co/videos/49231/49231-360.mp4",
+  "https://assets.mixkit.co/videos/40524/40524-1080.mp4"
+ ],
+ "weather": [
+  "https://assets.mixkit.co/videos/25375/25375-720.mp4",
+  "https://assets.mixkit.co/videos/25375/25375-360.mp4",
+  "https://assets.mixkit.co/videos/6890/6890-720.mp4"
+ ],
+ "technology": [
+  "https://assets.mixkit.co/videos/46635/46635-720.mp4",
+  "https://assets.mixkit.co/videos/46635/46635-360.mp4",
+  "https://assets.mixkit.co/videos/99786/99786-1080.mp4"
+ ]
+}

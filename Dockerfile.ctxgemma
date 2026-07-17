@@ -1,0 +1,55 @@
+# ctxgemma: ENRICHED two-stage, Gemma writes the final captions (keeps the $3k Gemma prize).
+# minimax native video -> structured scene + TEMPORAL description  ‖  Whisper audio (speech-guarded)
+#   -> Gemma-4-31B gets the description + audio + the actual frames + our gold personas/guardrails -> 4 styles.
+# Swap PERCEPTION_BACKEND fireworks->gemini (native-video describe) once GEMINI_API_KEY is set.
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    WORK_DIR=/tmp/stylecap
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ /app/app/
+
+ENV MODE=ctxgemma \
+    PERCEPTION_BACKEND=fireworks \
+    STYLIZE_BACKEND=hf \
+    FALLBACK_CHAIN=hf,fireworks,template \
+    FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1 \
+    FIREWORKS_VLM_MODEL=accounts/fireworks/models/minimax-m3 \
+    FIREWORKS_TEXT_MODEL=accounts/fireworks/models/minimax-m3 \
+    HF_BASE_URL=https://router.huggingface.co/v1 \
+    HF_MODEL=google/gemma-4-31B-it:fastest \
+    HF_MAX_IMAGES=5 \
+    GEMINI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/ \
+    GEMINI_MODEL=gemini-2.5-flash \
+    FRAME_TILE= \
+    FRAMES_PER_REQUEST=5 \
+    FRAME_PX=1024 \
+    MAX_FRAMES=24 \
+    ADAPTIVE_FRAMES=0 \
+    USE_AUDIO=1 \
+    VERIFY_PASS=1 \
+    FORMAL_TEMP=0.35 \
+    WITTY_TEMP=0.9 \
+    REASONING_EFFORT=none \
+    HTTP_TIMEOUT_S=150 \
+    CONCURRENCY=3 \
+    PER_CLIP_TIMEOUT_S=180 \
+    HTTP_RETRIES=6
+
+ARG FIREWORKS_API_KEY=""
+ENV FIREWORKS_API_KEY=${FIREWORKS_API_KEY}
+ARG HF_TOKEN=""
+ENV HF_TOKEN=${HF_TOKEN}
+ARG GEMINI_API_KEY=""
+ENV GEMINI_API_KEY=${GEMINI_API_KEY}
+
+ENTRYPOINT ["python", "-m", "app.main"]

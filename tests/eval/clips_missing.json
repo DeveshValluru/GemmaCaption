@@ -1,0 +1,17 @@
+[
+ {
+  "url": "https://storage.googleapis.com/amd-hackathon-clips/1860079-uhd_2560_1440_25fps.mp4",
+  "category": "urban",
+  "task_id": "official-urban"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/19179/19179-720.mp4",
+  "category": "animals",
+  "task_id": "mk-animals"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/25375/25375-720.mp4",
+  "category": "weather",
+  "task_id": "mk-weather"
+ }
+]

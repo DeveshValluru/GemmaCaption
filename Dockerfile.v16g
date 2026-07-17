@@ -1,0 +1,55 @@
+# v16g EXPERIMENT: reproduce the v16 = 0.83 base (Gemma-4-31B one-shot, ~5 frames @1024)
+# but with TODAY's gold style contracts + guardrails (app/styles.py + build_oneshot_prompt).
+# Purpose: isolate the value of our prompts/guardrails on the REAL leaderboard.
+#   v16 (old prompts) = 0.83  ->  if v16g (gold prompts) > 0.83, our prompt work provably helps.
+# Same architecture as v16 (MODE=oneshot, HF Gemma, frames) — ONLY the prompt content differs.
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    WORK_DIR=/tmp/stylecap
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ /app/app/
+
+# --- v16 baked config (from `docker inspect stylecap:v16`), current code + gold prompts ---
+ENV MODE=oneshot \
+    PERCEPTION_BACKEND=hf \
+    STYLIZE_BACKEND=hf \
+    FALLBACK_CHAIN=hf,fireworks,template \
+    HF_BASE_URL=https://router.huggingface.co/v1 \
+    HF_MODEL=google/gemma-4-31B-it:fastest \
+    HF_MAX_IMAGES=5 \
+    FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1 \
+    FIREWORKS_VLM_MODEL=accounts/fireworks/models/kimi-k2p6 \
+    FIREWORKS_TEXT_MODEL=accounts/fireworks/models/kimi-k2p6 \
+    FRAME_TILE= \
+    FRAMES_PER_REQUEST=16 \
+    FRAME_PX=1024 \
+    MAX_FRAMES=72 \
+    N_CANDIDATES=1 \
+    USE_AUDIO=0 \
+    ADAPTIVE_FRAMES=0 \
+    FORMAL_TEMP=0.35 \
+    WITTY_TEMP=0.9 \
+    JSON_MODE=1 \
+    DISTINCT_GUARD=1 \
+    REASONING_EFFORT=none \
+    HTTP_TIMEOUT_S=150 \
+    CONCURRENCY=3 \
+    PER_CLIP_TIMEOUT_S=180 \
+    HTTP_RETRIES=6
+
+ARG FIREWORKS_API_KEY=""
+ENV FIREWORKS_API_KEY=${FIREWORKS_API_KEY}
+ARG HF_TOKEN=""
+ENV HF_TOKEN=${HF_TOKEN}
+
+ENTRYPOINT ["python", "-m", "app.main"]

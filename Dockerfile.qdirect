@@ -1,0 +1,44 @@
+# qdirect: ETHICAL replica of the 0.92 `qwen-direct` architecture (silver-octo HANDOFF board ladder).
+# Qwen3.7-Plus, 4 frames @1024, NO describe / NO selector, one call per style, <caption_output> extract,
+# reasoning off, temp 0.7 — with OUR OWN short imperative personas + guardrails (zero competitor prose).
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    WORK_DIR=/tmp/stylecap
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ /app/app/
+
+ENV MODE=qwen_direct \
+    PERCEPTION_BACKEND=fireworks \
+    STYLIZE_BACKEND=fireworks \
+    FALLBACK_CHAIN=fireworks,template \
+    FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1 \
+    FIREWORKS_VLM_MODEL=accounts/fireworks/models/qwen3p7-plus \
+    FIREWORKS_TEXT_MODEL=accounts/fireworks/models/qwen3p7-plus \
+    FRAME_TILE= \
+    FRAMES_PER_REQUEST=4 \
+    FRAME_PX=1024 \
+    MAX_FRAMES=24 \
+    ADAPTIVE_FRAMES=0 \
+    USE_AUDIO=0 \
+    REASONING_EFFORT=none \
+    HTTP_TIMEOUT_S=150 \
+    CONCURRENCY=3 \
+    PER_CLIP_TIMEOUT_S=180 \
+    HTTP_RETRIES=6
+
+ARG FIREWORKS_API_KEY=""
+ENV FIREWORKS_API_KEY=${FIREWORKS_API_KEY}
+ARG HF_TOKEN=""
+ENV HF_TOKEN=${HF_TOKEN}
+
+ENTRYPOINT ["python", "-m", "app.main"]

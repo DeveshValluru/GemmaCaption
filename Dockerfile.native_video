@@ -1,0 +1,76 @@
+# Thin orchestrator image (BLUEPRINT N-04): no ML deps, no weights. Target < 500MB.
+# Build for the judge VM arch (R-07):
+#   docker buildx build --platform linux/amd64 -t ghcr.io/<user>/stylecap:vN --push .
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    WORK_DIR=/tmp/stylecap
+
+# ffmpeg is the only system dependency (frame + audio extraction).
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ /app/app/
+
+# --- Submission runtime config (Track 2 injects nothing, so bake it in) ---
+# v2: two-stage pipeline on Gemma 4 31B via HF Inference Providers (Gemma-prize path),
+# with Kimi/Fireworks + templates as fallback tiers.
+# v11: three specialist agents on the RIGHT model for each job.
+#   PERCEIVE = Kimi K2.6 (our best model, 1 call/clip so it won't rate-limit) -> rich description + audio
+#   STYLIZE  = Gemma 4 31B on HF (handles high call volume) -> best-of-N candidates, SHORT captions
+#   SELECT   = Gemma -> picks the wittiest accurate line (5 candidates per humor style)
+# Lessons baked in: no grids, no verify step, SHORT captions (8-16 words), split models for rate limits.
+# v12: AUDIO OFF — v4(no-audio)=0.73 dropped to v5(+Whisper audio)=0.67; Whisper poisons captions.
+# v13: ATTACK ACCURACY — 24 frames @ 768px (was 16 @ 512px). More temporal coverage + sharper
+#      detail so Kimi's description is accurate enough to reach the style ceiling. Everything else
+#      identical to v12 (Kimi perceive, Gemma best-of-N stylize+select, short captions, no audio).
+# Bonus: final captions are WRITTEN by Gemma -> keeps the $3k Gemma-prize eligibility.
+# v26: NATIVE VIDEO. minimax-m3 watches the ACTUAL clip (no frame sampling) -> factual description
+#   -> 4 styles. Native video = maximum true/checkable claims (all motion + actions) = the accuracy
+#   ceiling. Available on our Fireworks key, ~8s/describe, 2 calls/clip. Leaderboard play.
+# v30: + SURGICAL VERIFY (VERIFY_PASS=1). A cheap text redaction of the description strips ONLY the
+#   provable-fabrication categories (guessed sign text, brands, place names, identity labels, overlays)
+#   before styling, keeping all true detail/richness. Removes the recurring sign hallucination
+#   (KOREA HEUNG/NUCLEAR/MEDIA ENGINEE...) and unsupported identity claims. ~same speed as v28.
+# v31: BEST-OF-BOTH. Native-video perception (our ceiling) + DescribeX topper's STRUCTURED 7-category
+#   describe format + surgical verify (now also strips skin-colour/complexion) + our gold style
+#   personas & guardrails. Grafts the proven 0.84 recipe's structure onto stronger perception.
+ENV MODE=native_video \
+    PERCEPTION_BACKEND=fireworks \
+    STYLIZE_BACKEND=fireworks \
+    FALLBACK_CHAIN=fireworks,hf,template \
+    FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1 \
+    FIREWORKS_VLM_MODEL=accounts/fireworks/models/minimax-m3 \
+    FIREWORKS_TEXT_MODEL=accounts/fireworks/models/minimax-m3 \
+    HF_BASE_URL=https://router.huggingface.co/v1 \
+    HF_MODEL=google/gemma-4-31B-it:fastest \
+    HF_MAX_IMAGES=5 \
+    ANTHROPIC_BASE_URL=https://api.anthropic.com/v1 \
+    ANTHROPIC_MODEL=claude-haiku-4-5 \
+    FRAME_TILE= \
+    ADAPTIVE_FRAMES=0 \
+    USE_AUDIO=0 \
+    VERIFY_PASS=1 \
+    REASONING_EFFORT=none \
+    HTTP_TIMEOUT_S=150 \
+    CONCURRENCY=3 \
+    PER_CLIP_TIMEOUT_S=180 \
+    HTTP_RETRIES=6
+
+# Secrets passed at build time via --build-arg (never committed to the Dockerfile).
+# Baked into the image so the judge's container can call the APIs (R-14, N-06:
+# use spend-capped throwaway keys; rotate after the event).
+ARG FIREWORKS_API_KEY=""
+ENV FIREWORKS_API_KEY=${FIREWORKS_API_KEY}
+ARG HF_TOKEN=""
+ENV HF_TOKEN=${HF_TOKEN}
+ARG ANTHROPIC_API_KEY=""
+ENV ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+
+ENTRYPOINT ["python", "-m", "app.main"]

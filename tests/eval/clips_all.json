@@ -1,0 +1,57 @@
+[
+ {
+  "url": "https://storage.googleapis.com/amd-hackathon-clips/1860079-uhd_2560_1440_25fps.mp4",
+  "category": "urban",
+  "task_id": "official-urban"
+ },
+ {
+  "url": "https://storage.googleapis.com/amd-hackathon-clips/13825391-uhd_3840_2160_30fps.mp4",
+  "category": "animals",
+  "task_id": "official-animals"
+ },
+ {
+  "url": "https://storage.googleapis.com/amd-hackathon-clips/3044693-uhd_3840_2160_24fps.mp4",
+  "category": "people",
+  "task_id": "official-people"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/2213/2213-1080.mp4",
+  "category": "nature",
+  "task_id": "mk-nature"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/49845/49845-1080.mp4",
+  "category": "urban",
+  "task_id": "mk-urban"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/19179/19179-720.mp4",
+  "category": "animals",
+  "task_id": "mk-animals"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/4401/4401-1080.mp4",
+  "category": "people",
+  "task_id": "mk-people"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/43483/43483-1080.mp4",
+  "category": "sports",
+  "task_id": "mk-sports"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/49231/49231-720.mp4",
+  "category": "food",
+  "task_id": "mk-food"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/25375/25375-720.mp4",
+  "category": "weather",
+  "task_id": "mk-weather"
+ },
+ {
+  "url": "https://assets.mixkit.co/videos/46635/46635-720.mp4",
+  "category": "technology",
+  "task_id": "mk-technology"
+ }
+]

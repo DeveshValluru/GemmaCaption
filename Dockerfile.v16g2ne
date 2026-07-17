@@ -1,0 +1,55 @@
+# v16g2ne = v16g2 (the CONFIRMED 0.87 recipe) with EXEMPLARS REMOVED for the witty styles.
+# Clean A/B: identical to v16g2 in every other way (NO json mode, NO distinctness guard) so the
+# ONLY variable vs the 0.87 baseline is the exemplars. Formal keeps its exemplars (a factual
+# register anchor only helps); sarcastic/humorous_tech/humorous_non_tech drop theirs, on the
+# theory that the sample captions were limiting their variety (e.g. the sarcastic exemplar even
+# opened with the "Behold" its own contract bans).
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    WORK_DIR=/tmp/stylecap
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ /app/app/
+
+# --- v16g2 baked config (current code + gold prompts), exemplars off for the witty styles ---
+ENV MODE=oneshot \
+    PERCEPTION_BACKEND=hf \
+    STYLIZE_BACKEND=hf \
+    FALLBACK_CHAIN=hf,fireworks,template \
+    HF_BASE_URL=https://router.huggingface.co/v1 \
+    HF_MODEL=google/gemma-4-31B-it:fastest \
+    HF_MAX_IMAGES=5 \
+    FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1 \
+    FIREWORKS_VLM_MODEL=accounts/fireworks/models/kimi-k2p6 \
+    FIREWORKS_TEXT_MODEL=accounts/fireworks/models/kimi-k2p6 \
+    FRAME_TILE= \
+    FRAMES_PER_REQUEST=16 \
+    FRAME_PX=1024 \
+    MAX_FRAMES=72 \
+    N_CANDIDATES=1 \
+    USE_AUDIO=0 \
+    ADAPTIVE_FRAMES=0 \
+    FORMAL_TEMP=0.35 \
+    WITTY_TEMP=0.9 \
+    EXEMPLAR_STYLES=formal \
+    REASONING_EFFORT=none \
+    HTTP_TIMEOUT_S=150 \
+    CONCURRENCY=3 \
+    PER_CLIP_TIMEOUT_S=180 \
+    HTTP_RETRIES=6
+
+ARG FIREWORKS_API_KEY=""
+ENV FIREWORKS_API_KEY=${FIREWORKS_API_KEY}
+ARG HF_TOKEN=""
+ENV HF_TOKEN=${HF_TOKEN}
+
+ENTRYPOINT ["python", "-m", "app.main"]

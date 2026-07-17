@@ -1,0 +1,112 @@
+[
+ {
+  "task_id": "official-urban",
+  "video_url": "https://storage.googleapis.com/amd-hackathon-clips/1860079-uhd_2560_1440_25fps.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "official-animals",
+  "video_url": "https://storage.googleapis.com/amd-hackathon-clips/13825391-uhd_3840_2160_30fps.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "official-people",
+  "video_url": "https://storage.googleapis.com/amd-hackathon-clips/3044693-uhd_3840_2160_24fps.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "mk-nature",
+  "video_url": "https://assets.mixkit.co/videos/2213/2213-1080.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "mk-urban",
+  "video_url": "https://assets.mixkit.co/videos/49845/49845-1080.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "mk-animals",
+  "video_url": "https://assets.mixkit.co/videos/19179/19179-720.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "mk-people",
+  "video_url": "https://assets.mixkit.co/videos/4401/4401-1080.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "mk-sports",
+  "video_url": "https://assets.mixkit.co/videos/43483/43483-1080.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "mk-food",
+  "video_url": "https://assets.mixkit.co/videos/49231/49231-720.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "mk-weather",
+  "video_url": "https://assets.mixkit.co/videos/25375/25375-720.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ },
+ {
+  "task_id": "mk-technology",
+  "video_url": "https://assets.mixkit.co/videos/46635/46635-720.mp4",
+  "styles": [
+   "formal",
+   "sarcastic",
+   "humorous_tech",
+   "humorous_non_tech"
+  ]
+ }
+]

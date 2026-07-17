@@ -1,0 +1,19 @@
+[
+  {
+    "task_id": "single-style",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/13825391-uhd_3840_2160_30fps.mp4",
+    "styles": ["formal"]
+  },
+  {
+    "task_id": "unknown-style-and-extra-fields",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/1860079-uhd_2560_1440_25fps.mp4",
+    "styles": ["formal", "pirate", "humorous_tech"],
+    "priority": 9,
+    "note": "extra fields must be ignored (F-01); 'pirate' is unknown but must still get a caption (F-02)"
+  },
+  {
+    "task_id": "broken-url",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/DOES-NOT-EXIST-404.mp4",
+    "styles": ["formal", "sarcastic", "humorous_tech", "humorous_non_tech"]
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "task_id": "s00",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/1860079-uhd_2560_1440_25fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s01",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/13825391-uhd_3840_2160_30fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s02",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/3044693-uhd_3840_2160_24fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s03",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/1860079-uhd_2560_1440_25fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s04",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/13825391-uhd_3840_2160_30fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s05",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/3044693-uhd_3840_2160_24fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s06",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/1860079-uhd_2560_1440_25fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s07",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/13825391-uhd_3840_2160_30fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s08",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/3044693-uhd_3840_2160_24fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s09",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/1860079-uhd_2560_1440_25fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s10",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/13825391-uhd_3840_2160_30fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  },
+  {
+    "task_id": "s11",
+    "video_url": "https://storage.googleapis.com/amd-hackathon-clips/3044693-uhd_3840_2160_24fps.mp4",
+    "styles": [
+      "formal",
+      "sarcastic",
+      "humorous_tech",
+      "humorous_non_tech"
+    ]
+  }
+]

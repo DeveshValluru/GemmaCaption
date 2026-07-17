@@ -1,0 +1,50 @@
+# gemgem: Gemini describe -> Gemma write (the enriched Gemma-prize pipeline you asked for).
+# Gemini (gemini-flash-latest, OpenAI-compat, reads FRAMES) -> structured describe -> surgical verify
+#   -> HF Gemma-4-31B writes the 4 styles from the frames + description, per-style temperature.
+# Gemma writes the final captions => $3k Gemma prize eligible; Gemini only assists perception.
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    WORK_DIR=/tmp/stylecap
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ /app/app/
+
+ENV MODE=ctxgemma \
+    PERCEPTION_BACKEND=gemini \
+    STYLIZE_BACKEND=hf \
+    FALLBACK_CHAIN=hf,gemini,template \
+    GEMINI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/ \
+    GEMINI_MODEL=gemini-flash-latest \
+    HF_BASE_URL=https://router.huggingface.co/v1 \
+    HF_MODEL=google/gemma-4-31B-it:fastest \
+    HF_MAX_IMAGES=5 \
+    FRAME_TILE= \
+    FRAMES_PER_REQUEST=8 \
+    FRAME_PX=1024 \
+    MAX_FRAMES=24 \
+    ADAPTIVE_FRAMES=0 \
+    USE_AUDIO=1 \
+    VERIFY_PASS=1 \
+    FORMAL_TEMP=0.35 \
+    WITTY_TEMP=0.9 \
+    REASONING_EFFORT= \
+    HTTP_TIMEOUT_S=150 \
+    CONCURRENCY=3 \
+    PER_CLIP_TIMEOUT_S=180 \
+    HTTP_RETRIES=6
+
+ARG GEMINI_API_KEY=""
+ENV GEMINI_API_KEY=${GEMINI_API_KEY}
+ARG HF_TOKEN=""
+ENV HF_TOKEN=${HF_TOKEN}
+
+ENTRYPOINT ["python", "-m", "app.main"]
