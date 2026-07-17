@@ -1,0 +1,12 @@
+.git
+.gitignore
+docs/
+*.md
+tests/out/
+tests/media_cache/
+**/__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+scratchpad/

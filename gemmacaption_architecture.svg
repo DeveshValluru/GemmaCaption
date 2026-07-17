@@ -1,0 +1,92 @@
+<svg viewBox="0 0 760 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+<title id="t">GemmaCaption architecture</title>
+<desc id="d">Video frames flow into three parallel Gemma steps: a formal caption, best-of-N witty captions, and a factual scene description. A description-grounded selector picks the best witty caption per style, then four captions are assembled and written to results.json.</desc>
+<style>
+  text{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;text-anchor:middle}
+  .h{fill:#2C2C2A;font-size:15px;font-weight:700}
+  .pill{fill:#3C3489;font-size:10.5px;font-weight:700;letter-spacing:.04em}
+  .gem{fill:#EEEDFE;stroke:#AFA9EC;stroke-width:1.5}
+  .hero{fill:#534AB7;stroke:#3C3489;stroke-width:2}
+  .neu{fill:#F4F2EC;stroke:#C9C7BD;stroke-width:1.5}
+  .ln{fill:none;stroke:#9a988f;stroke-width:1.6}
+  .tt-g{fill:#3C3489;font-size:12.5px;font-weight:700}
+  .st-g{fill:#3C3489;font-size:10px;opacity:.82}
+  .tt-h{fill:#F0EFFE;font-size:13px;font-weight:700}
+  .st-h{fill:#F0EFFE;font-size:10px;opacity:.92}
+  .lb-h{fill:#F0EFFE;font-size:8px;font-weight:700;letter-spacing:.14em;opacity:.85}
+  .tt-n{fill:#2C2C2A;font-size:12.5px;font-weight:700}
+  .st-n{fill:#5F5E5A;font-size:10px}
+  .xs{fill:#5F5E5A;font-size:9px}
+  .l{text-anchor:start}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#9a988f"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="760" height="600" fill="#FFFFFF"/>
+
+<text class="h l" x="40" y="30">GemmaCaption — architecture</text>
+<rect class="gem" x="612" y="16" width="108" height="24" rx="12"/>
+<text class="pill" x="666" y="32">100% GEMMA</text>
+
+<rect class="neu" x="300" y="46" width="160" height="46" rx="9"/>
+<text class="tt-n" x="380" y="66">Input</text>
+<text class="st-n" x="380" y="82">/input/tasks.json</text>
+<path class="ln" d="M380,92 L380,106" marker-end="url(#a)"/>
+
+<rect class="neu" x="300" y="106" width="160" height="46" rx="9"/>
+<text class="tt-n" x="380" y="126">Frame sampler</text>
+<text class="st-n" x="380" y="142">even · chronological</text>
+
+<path class="ln" d="M380,152 L380,172"/>
+<path class="ln" d="M130,172 L630,172"/>
+<path class="ln" d="M130,172 L130,190" marker-end="url(#a)"/>
+<path class="ln" d="M380,172 L380,190" marker-end="url(#a)"/>
+<path class="ln" d="M630,172 L630,190" marker-end="url(#a)"/>
+
+<rect class="gem" x="40" y="190" width="180" height="58" rx="9"/>
+<text class="tt-g" x="130" y="216">Formal caption</text>
+<text class="st-g" x="130" y="233">Gemma · 1× · low temp</text>
+
+<rect class="gem" x="290" y="190" width="180" height="58" rx="9"/>
+<text class="tt-g" x="380" y="211">Witty · best-of-N</text>
+<text class="st-g" x="380" y="227">Gemma · N× · high temp</text>
+<text class="xs" x="380" y="241">sarcastic · tech · non-tech</text>
+
+<rect class="gem" x="540" y="190" width="180" height="58" rx="9"/>
+<text class="tt-g" x="630" y="216">Scene description</text>
+<text class="st-g" x="630" y="233">Gemma · source of truth</text>
+
+<path class="ln" d="M380,248 L380,298" marker-end="url(#a)"/>
+<path class="ln" d="M630,248 L630,298" marker-end="url(#a)"/>
+
+<rect class="hero" x="340" y="298" width="330" height="58" rx="10"/>
+<text class="lb-h" x="505" y="315">THE CORE IDEA</text>
+<text class="tt-h" x="505" y="333">Description-grounded selection</text>
+<text class="st-h" x="505" y="349">accuracy gate → wit pick</text>
+
+<path class="ln" d="M130,248 L130,431 L278,431" marker-end="url(#a)"/>
+<text class="xs l" x="46" y="360">generation</text>
+<text class="xs l" x="46" y="372">untouched</text>
+
+<path class="ln" d="M505,356 L505,431 L482,431" marker-end="url(#a)"/>
+
+<rect class="neu" x="280" y="406" width="200" height="50" rx="9"/>
+<text class="tt-n" x="380" y="427">Assemble 4 captions</text>
+<text class="st-n" x="380" y="444">+ guardrails</text>
+<path class="ln" d="M380,456 L380,496" marker-end="url(#a)"/>
+
+<rect class="neu" x="290" y="496" width="180" height="46" rx="9"/>
+<text class="tt-n" x="380" y="516">Output</text>
+<text class="st-n" x="380" y="532">/output/results.json</text>
+
+<text class="xs l" x="40" y="566">Guardrails: grounding · non-tech word ban · coherence repair</text>
+<text class="xs l" x="40" y="581">Fallback: Gemma → serverless backup → templates — output is never empty</text>
+
+<rect class="gem" x="556" y="559" width="13" height="13" rx="3"/>
+<text class="xs l" x="574" y="569">Gemma step</text>
+<rect class="neu" x="556" y="576" width="13" height="13" rx="3"/>
+<text class="xs l" x="574" y="586">I/O · assembly</text>
+</svg>

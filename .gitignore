@@ -1,0 +1,30 @@
+# Secrets - NEVER commit
+.env
+.env.*
+!.env.example
+CONTEXT_HANDOFF.md
+
+# Internal strategy docs - excluded per submission decision
+BLUEPRINT.md
+PROGRESS.md
+SUBMISSION.md
+docs/
+
+# Stale StyleCap artifacts (superseded by GemmaCaption.*)
+StyleCap_Deck.pptx
+stylecap_demo.mp4
+
+# Claude / local tooling
+.claude/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# OS junk
+.DS_Store
+Thumbs.db
